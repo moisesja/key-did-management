@@ -1,4 +1,3 @@
-import { Wallet } from 'ethers'
 import { EthrDID } from 'ethr-did'
 import { InfuraProvider } from 'ethers/providers'
 
@@ -10,10 +9,12 @@ export default class DIDManager {
     console.log('DID Manager initialized')
   }
 
-  createPrivateKey() {
-    const wallet = Wallet.createRandom()
+  createPrivateKey(): any {
+    const keypair = EthrDID.createKeyPair()
 
-    console.log('Wallet created:', wallet)
+    console.log('Wallet created:', keypair)
+
+    return keypair
 
     /*
     const privateKey = wallet.privateKey
