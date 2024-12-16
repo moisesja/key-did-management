@@ -9,13 +9,14 @@ const did = ref(store.did)
 const didManager = new DidManager()
 
 function generateDid() {
-  didManager.createPrivateKey()
-  //store.setDid(keyPair.did)
+  const didValue = didManager.createDID(didManager.createPrivateKey())
 
-  // console.log('Generating DID', keyPair.privateKey)
-  //store.setDid('new-generated-did')
   // Logic to generate DID
-  did.value = 'new-generated-did'
+  store.setDid(didValue)
+
+  didManager.resolveDID(didValue)
+
+  did.value = didValue
 }
 
 function rotateKey() {
@@ -27,7 +28,11 @@ function rotateKey() {
 
 <template>
   <v-container>
-    <v-text-field label="DID" v-model="did" variant="solo-inverted"></v-text-field>
+    <v-row>
+      <v-col cols="12">
+        <v-text-field label="DID" v-model="did" variant="solo-inverted"></v-text-field>
+      </v-col>
+    </v-row>
   </v-container>
   <v-container>
     <v-row align="center" justify="center">
