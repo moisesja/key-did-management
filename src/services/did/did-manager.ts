@@ -46,11 +46,11 @@ export default class DIDManager {
 
     console.log('DID Resolver:', didResolver)
 
-    const didResolutionResult = await didResolver.resolve(did)
+    const resolveResult = await didResolver.resolve(did)
 
-    console.log('DID Document:', didResolutionResult)
+    console.log('DID Resolve:', resolveResult)
 
-    return didResolutionResult.didDocument
+    return resolveResult.didDocument
   }
   /*
   // Method to anchor DID to Arbitrum

@@ -8,13 +8,15 @@ const store = useWalletStore()
 const did = ref(store.did)
 const didManager = new DidManager()
 
-function generateDid() {
+async function generateDid(): Promise<void> {
   const didValue = didManager.createDID(didManager.createPrivateKey())
 
   // Logic to generate DID
   store.setDid(didValue)
 
-  didManager.resolveDID(didValue)
+  const didDocument = await didManager.resolveDID(didValue)
+  console.log('didDocument', didDocument)
+  store.setDidDocument(didDocument)
 
   did.value = didValue
 }
