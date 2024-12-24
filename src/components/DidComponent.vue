@@ -1,24 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import useWalletStore from '@/stores/wallet-store'
-import DidManager from '@/services/did/did-manager'
+import { agent } from '@/services/wallet/wallet-agent'
 
 const store = useWalletStore()
 
 const did = ref(store.did)
-const didManager = new DidManager()
 
 async function generateDid(): Promise<void> {
-  const didValue = didManager.createDID(didManager.createPrivateKey())
+  const resolutionResult = await agent.resolveDid({
+    didUrl: did.value,
+  })
 
-  // Logic to generate DID
-  store.setDid(didValue)
-
-  const didDocument = await didManager.resolveDID(didValue)
-  console.log('didDocument', didDocument)
-  store.setDidDocument(didDocument)
-
-  did.value = didValue
+  console.log('Resolution result', resolutionResult)
+  store.setDidDocument(resolutionResult.didDocument)
 }
 
 function rotateKey() {
